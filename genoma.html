@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<HTML lang="fr">
+<HEAD>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GéNoMa : GÉnérateur de NOm de MAladie">
+<meta name="author" content="Guillaume JANDOT">
+<!--link rel="icon" type="image/png" href="nom2sen.png"-->
+<meta charset="UTF-8">
+<TITLE>GéNoMa</TITLE>
+<STYLE>
+
+#ligne { margin:15px; }
+#maladie { font-size:1.2em; color:blue; border:blue 1px solid; padding:5px; background-color:lightgrey; }
+#version a { font-size:0.35em; color:#777777; position:fixed; bottom:5px; right:9px; text-decoration:none; }
+#numsen { font-size:0.5em; }
+</STYLE>
+
+<noscript>L'application nécessite l'activation de Javascript.</noscript>
+<SCRIPT type="text/javascript">
+const VERNUM = "0.001";
+const VERDES = "G. JANDOT 09/06/2022";
+
+tab_maladies = [
+					"Allergie",
+					"Amnésie",
+					"Blennorragie",
+					"Botulisme",
+					"Brucellose",
+					"Cancer",
+					"Chikungunya",
+					"Choléra",
+					"Covid",
+					"Cysticercose",
+					"Cystite",
+					"Dengue",
+					"Diarrhée",
+					"Diphtérie",
+					"Distomatose hépatique",
+					"Éléphantiasis",
+					"Encéphalite",
+					"Fièvre",
+					"Filariose lymphatique",
+					"Gangrène",
+					"Gale",
+					"Gonococcie",
+					"Grippe",
+					"Hépatite",
+					"Herpès",
+					"Histoplasmose",
+					"Insomnie",
+					"Kératite",
+					"Lèpre",
+					"Leptospirose",
+					"Malaria",
+					"Méningite",
+					"Migraine",
+					"Paludisme",
+					"Paralysie",
+					"Peste",
+					"Pneumonie",
+					"Rage", 
+					"Rougeole",
+					"Rhinite",
+					"Rhume",
+					"Rubéole",
+					"Scarlatine",
+					"Scorbut",
+					"Sida",
+					"Syphilis",
+					"Tétanos",
+					"Toxoplasmose",
+					"Tuberculose",
+					"Typhus",
+					"Urticaire",
+					"Varicelle",
+					"Variole",
+];
+
+tab_animaux = [
+				"de l'abeille",
+				"de l'acarien",
+				"de l'âne",
+				"de l'autruche",
+				"du baudet",
+				"du bouc",
+				"du bouquetin",
+				"de la brebis",
+				"du canard",
+				"du caniche",
+				"du chamois",
+				"du chat",
+				"de la chauve-souris",
+				"de la chèvre",
+				"du chien",
+				"du cheval",
+				"du chevreuil",
+				"de la coccinelle",
+				"du cochon",
+				"du coq",
+				"du corbeau",
+				"du coucou",
+				"de la couleuvre",
+				"du dauphin",
+				"de l'éléphant",
+				"de l'escargot",
+				"de la fourmi",
+				"de la girafe",
+				"du gorille",
+				"de la guêpe",
+				"du hérisson",
+				"de l'hippopotame",
+				"de l'hirondelle",
+				"des insectes",
+				"du kangourou",
+				"du lapin",
+				"du lièvre",
+				"de la limace",
+				"du loup",
+				"du lynx",
+				"des mammifères",
+				"du mammouth",
+				"de la marmotte",
+				"du merle",
+				"du moineau",
+				"de la mouche",
+				"du moustique",
+				"du mouton",
+				"de l'oie",
+				"des oiseaux",
+				"de l'ours",
+				"du panda",
+				"du pangolin",
+				"du papillon",
+				"de la perdrix",
+				"du perroquet",
+				"de la pie",
+				"des poissons",
+				"du poney",
+				"de la poule",
+				"du poulpe",
+				"de la puce",
+				"du puceron",
+				"du rat",
+				"du requin",
+				"du renard",
+				"du rhinocéros",
+				"du sanglier",
+				"de la sardine",
+				"du serpent",
+				"du singe",
+				"de la souris",
+				"de la taupe",
+				"du taureau",
+				"de la termite",
+				"de la vache",
+				"de la vipère",
+				"du zèbre",
+	];
+
+function un_parmi(tab)
+{
+	return tab[Math.floor(tab.length*Math.random())];
+}
+
+function main()
+{
+	document.getElementById("maladie").innerHTML =
+	un_parmi(tab_maladies) + " " + un_parmi(tab_animaux);
+}
+</SCRIPT>
+</HEAD>
+<BODY onload="main()" style="user-select:none">
+Après la "variole du singe" et la "grippe de la tomate",
+idée de nom de maladie pour future pandémie :<BR>
+<div id="ligne"><span id="maladie"></span></div>
+<div id="version"><A HREF="https://github.com/gjandot/" TARGET="_blank">Version <span id="vernum">0.000</span>(en construction)</A></div>
+<button id="restart" onclick="main()" class="bouton">Une autre !</button>
+</BODY>
+</HTML>
