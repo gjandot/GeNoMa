@@ -11,14 +11,14 @@
 <STYLE>
 
 #ligne { margin:15px; }
-#maladie { font-size:1.2em; color:blue; border:blue 1px solid; padding:5px; background-color:lightgrey; }
-#version a { font-size:0.35em; color:#777777; position:fixed; bottom:5px; right:9px; text-decoration:none; }
+#maladie { font-size:1.2em; color:blue; border:blue 1px solid; border-radius:5px; padding:5px; background-color:lightgrey; }
+#version a { font-size:0.75em; color:#777777; position:fixed; bottom:5px; right:9px; text-decoration:none; }
 #numsen { font-size:0.5em; }
 </STYLE>
 
 <noscript>L'application nécessite l'activation de Javascript.</noscript>
 <SCRIPT type="text/javascript">
-const VERNUM = "0.002";
+const VERNUM = "0.003";
 const VERDES = "G. JANDOT 10/06/2022";
 
 tab_maladies = [
@@ -242,7 +242,7 @@ tab_animaux = [
 				"du phoque",
 				"de la pie",
 				"de la pieuvre",
-				"des poissons",			
+				"des poissons",
 				"du poney",
 				"du porc",
 				"du porc-épic",
@@ -287,18 +287,22 @@ function un_parmi(tab)
 	return tab[Math.floor(tab.length*Math.random())];
 }
 
+function elt(nom_obj) { return document.getElementById(nom_obj); }
+
 function main()
 {
-	document.getElementById("maladie").innerHTML =
-	un_parmi(tab_maladies) + " " + un_parmi(tab_animaux);
+	elt("vernum").innerHTML = VERNUM;
+	elt("version").title = VERDES;
+	elt("maladie").innerHTML = un_parmi(tab_maladies) + " " + un_parmi(tab_animaux);
 }
 </SCRIPT>
 </HEAD>
 <BODY onload="main()" style="user-select:none">
-Après la "variole du singe" et la "grippe de la tomate",
-idée de nom de maladie pour future pandémie :<BR>
+Après la "<A HREF="https://fr.wikipedia.org/wiki/Variole_du_singe">variole du singe</A>"
+et la "<A HREF="https://fr.wiktionary.org/wiki/grippe_de_la_tomate#Fran%C3%A7ais">grippe de la tomate</A>",
+idée de nom de maladie pour future pandémie&nbsp;:<BR>
 <div id="ligne"><span id="maladie"></span></div>
-<div id="version"><A HREF="https://github.com/gjandot/GeNoMa" TARGET="_blank">Version <span id="vernum">0.000</span>(en construction)</A></div>
+<div id="version"><A HREF="https://github.com/gjandot/GeNoMa" TARGET="_blank">Version <span id="vernum">0.000</span></A></div>
 <button id="restart" onclick="main()" class="bouton">Une autre !</button>
 </BODY>
 </HTML>
