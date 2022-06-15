@@ -18,8 +18,8 @@
 
 <noscript>L'application nécessite l'activation de Javascript.</noscript>
 <SCRIPT type="text/javascript">
-const VERNUM = "0.003";
-const VERDES = "G. JANDOT 10/06/2022";
+const VERNUM = "0.004";
+const VERDES = "G. JANDOT 13/06/2022";
 
 tab_maladies = [
 					"Acné",
@@ -281,19 +281,54 @@ tab_animaux = [
 				"du yak",
 				"du zèbre",
 	];
+	
+const NB_REP_DETECT = 8;
+
+var tab_repetitions = []; //pour la détection des répétitions
 
 function un_parmi(tab)
 {
 	return tab[Math.floor(tab.length*Math.random())];
 }
 
+function est_dans(val, tab)
+{
+	for (var i=0; i<tab.length; i++)
+	{
+		if (val==tab[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 function elt(nom_obj) { return document.getElementById(nom_obj); }
 
 function main()
 {
+	var maladie = "";
+	var animal = "";
+	
 	elt("vernum").innerHTML = VERNUM;
 	elt("version").title = VERDES;
-	elt("maladie").innerHTML = un_parmi(tab_maladies) + " " + un_parmi(tab_animaux);
+	do
+	{
+		maladie = un_parmi(tab_maladies);
+		
+	} while (est_dans(maladie,tab_repetitions))
+	do
+	{
+		animal = un_parmi(tab_animaux);
+	} while (est_dans(animal,tab_repetitions))	
+	elt("maladie").innerHTML = maladie + " " + animal;
+	tab_repetitions.push(maladie);
+	tab_repetitions.push(animal);
+	if (tab_repetitions.length > NB_REP_DETECT*2)
+	{
+		tab_repetitions.shift();
+		tab_repetitions.shift();
+	}
 }
 </SCRIPT>
 </HEAD>
