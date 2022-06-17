@@ -5,21 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="GéNoMa : GÉnérateur de NOm de MAladie">
 <meta name="author" content="Guillaume JANDOT">
-<!--link rel="icon" type="image/png" href="genoma.png"-->
+<link rel="icon" type="image/png" href="genoma.png">
 <meta charset="UTF-8">
 <TITLE>GéNoMa</TITLE>
 <STYLE>
-
+body { user-select:none; background-color:black; width:80%; margin:auto; text-align:center; font-size:1.2em;color:yellow; }
+#content { margin-top:50px; border:yellow 1px solid; border-radius:9px; padding:9px;
+		background:linear-gradient(#FFAAAA, #FF2222); }
+#content a { color:yellow; }
 #ligne { margin:15px; }
-#maladie { font-size:1.2em; color:blue; border:blue 1px solid; border-radius:5px; padding:5px; background-color:lightgrey; }
-#version a { font-size:0.75em; color:#777777; position:fixed; bottom:5px; right:9px; text-decoration:none; }
-#numsen { font-size:0.5em; }
+#maladie { font-size:1.2em; color:orange; border:orange 3px solid; border-radius:7px; padding:7px; background-color:white; text-decoration:none; }
+#restart { cursor:pointer; }
+#version a { font-size:0.6em; color:#777777; position:fixed; bottom:5px; right:9px; text-decoration:none; }
 </STYLE>
 
 <noscript>L'application nécessite l'activation de Javascript.</noscript>
 <SCRIPT type="text/javascript">
-const VERNUM = "0.004";
-const VERDES = "G. JANDOT 13/06/2022";
+const VERNUM = "1.005";
+const VERDES = "G. JANDOT 17/06/2022";
+const WP_BASE_URL = "https://fr.wikipedia.org/wiki/";
+const NB_REP_DETECT = 8;
+
 
 tab_maladies = [
 					"Acné",
@@ -31,7 +37,6 @@ tab_maladies = [
 					"Blennorragie",
 					"Botulisme",
 					"Bronchite",
-					"Bronchopneumopathie",
 					"Brucellose",
 					"Cancer",
 					"Carcinome",
@@ -40,6 +45,7 @@ tab_maladies = [
 					"Choléra",
 					"Conjonctivite",
 					"Coqueluche",
+					"Coryza",
 					"Covid",
 					"Cryptorchidie",
 					"Cysticercose",
@@ -52,6 +58,7 @@ tab_maladies = [
 					"Éléphantiasis",
 					"Encéphalite",
 					"Encéphalopathie",
+					"Fasciolose",
 					"Fièvre",
 					"Filariose lymphatique",
 					"Gangrène",
@@ -89,10 +96,8 @@ tab_maladies = [
 					"Peste",
 					"Phimosis",
 					"Pneumonie",
-					"Pneumophatie",
 					"Poliomyélite",
 					"Polynévrite",
-					"Psittacose",
 					"Rage", 
 					"Rougeole",
 					"Rhinite",
@@ -107,7 +112,6 @@ tab_maladies = [
 					"Sepsis",
 					"Sida",
 					"Sinusite",
-					"Sulfocarbonisme",
 					"Syphilis",
 					"Tétanos",
 					"Toxoplasmose",
@@ -119,7 +123,7 @@ tab_maladies = [
 					"Urticaire",
 					"Varicelle",
 					"Variole",
-					"Verrues",
+					"Verrue",
 					"Zona",
 	];
 
@@ -262,7 +266,7 @@ tab_animaux = [
 				"de la sardine",
 				"du saumon",
 				"du scorpion",
-				"du serpent",
+				"des serpents",
 				"du singe",
 				"de la souris",
 				"du suricate",
@@ -282,9 +286,8 @@ tab_animaux = [
 				"du zèbre",
 	];
 	
-const NB_REP_DETECT = 8;
-
 var tab_repetitions = []; //pour la détection des répétitions
+var cpt = -1; //mode test
 
 function un_parmi(tab)
 {
@@ -312,16 +315,30 @@ function main()
 	
 	elt("vernum").innerHTML = VERNUM;
 	elt("version").title = VERDES;
-	do
+	if (window.location.search.toLowerCase() == "?test")
 	{
-		maladie = un_parmi(tab_maladies);
-		
-	} while (est_dans(maladie,tab_repetitions))
-	do
-	{
+		cpt++;
+		if (cpt >= tab_maladies.length)
+		{
+			cpt = 0;
+		}
+		maladie = tab_maladies[cpt];
 		animal = un_parmi(tab_animaux);
-	} while (est_dans(animal,tab_repetitions))	
+	}
+	else
+	{
+		do
+		{
+			maladie = un_parmi(tab_maladies);
+			
+		} while (est_dans(maladie,tab_repetitions))
+		do
+		{
+			animal = un_parmi(tab_animaux);
+		} while (est_dans(animal,tab_repetitions))
+	}
 	elt("maladie").innerHTML = maladie + " " + animal;
+	elt("wp").href = WP_BASE_URL + maladie;
 	tab_repetitions.push(maladie);
 	tab_repetitions.push(animal);
 	if (tab_repetitions.length > NB_REP_DETECT*2)
@@ -332,12 +349,14 @@ function main()
 }
 </SCRIPT>
 </HEAD>
-<BODY onload="main()" style="user-select:none">
+<BODY onload="main()">
+<div id="content">
 Après la "<A HREF="https://fr.wikipedia.org/wiki/Variole_du_singe">variole du singe</A>"
 et la "<A HREF="https://fr.wiktionary.org/wiki/grippe_de_la_tomate#Fran%C3%A7ais">grippe de la tomate</A>",
 idée de nom de maladie pour future pandémie&nbsp;:<BR>
-<div id="ligne"><span id="maladie"></span></div>
+<div id="ligne"><A HREF="https://fr.wikipedia.org/wiki/Maladie" id="wp" TARGET="WP" style="text-decoration:none"><span id="maladie"></span></A></div>
 <div id="version"><A HREF="https://github.com/gjandot/GeNoMa" TARGET="_blank">Version <span id="vernum">0.000</span></A></div>
-<button id="restart" onclick="main()" class="bouton">Une autre !</button>
+<button id="restart" onclick="main()">Une autre !</button>
+</div><!--/content-->
 </BODY>
 </HTML>
