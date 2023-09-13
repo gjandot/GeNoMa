@@ -21,8 +21,8 @@ body { user-select:none; background-color:black; width:80%; margin:auto; text-al
 
 <noscript>L'application nécessite l'activation de Javascript.</noscript>
 <SCRIPT type="text/javascript">
-const VERNUM = "1.008";
-const VERDES = "G. JANDOT 29/07/2023";
+const VERNUM = "1.009";
+const VERDES = "G. JANDOT 13/09/2023";
 const WP_BASE_URL = "https://fr.wikipedia.org/wiki/";
 const NB_REP_DETECT = 8;
 
@@ -472,7 +472,6 @@ tab_animaux = [
 	];
 	
 var tab_repetitions = []; //pour la détection des répétitions
-var cpt = -1; //mode test
 
 function un_parmi(tab)
 {
@@ -500,18 +499,7 @@ function main()
 	
 	elt("vernum").innerHTML = VERNUM;
 	elt("version").title = VERDES;
-	if (window.location.search.toLowerCase() == "?test")
-	{
-		cpt++;
-		if (cpt >= tab_maladies.length)
-		{
-			cpt = 0;
-		}
-		maladie = tab_maladies[cpt];
-		animal = un_parmi(tab_animaux);
-	}
-	else
-	{
+	do {
 		do
 		{
 			maladie = un_parmi(tab_maladies);
@@ -521,7 +509,8 @@ function main()
 		{
 			animal = un_parmi(tab_animaux);
 		} while (est_dans(animal,tab_repetitions))
-	}
+	} while ( (maladie=="Variole") && (animal=="du singe") )
+	
 	elt("maladie").innerHTML = maladie + " " + animal;
 	elt("wp").href = WP_BASE_URL + maladie;
 	tab_repetitions.push(maladie);
